@@ -1,0 +1,83 @@
+name: Build Electron (Windows unpacked)
+
+# 手动触发,或 push 一个 `v*` tag 时触发:内网用的 Electron 桌面版。
+# 应用代码在 feat/electron-desktop 分支,所以这里显式 checkout 该分支。
+# 注意:此处固定了分支名;若将来该分支合并/改名,需同步更新下方 checkout 的 ref。
+#
+# 此 workflow 只存在于 main(桌面发布中枢):tag 触发时 GitHub 用“被 tag 的 main
+# commit”里的定义。feat/electron-desktop 不保留 workflow 副本(会与 main 漂移)——
+# 无论打 tag 还是手动 “Run workflow”,都从 main 触发;下方 pin 的 ref 保证仍构建该
+# 分支的代码。
+#
+# text-joiner 是纯 Electron(无 Tauri 分支/矩阵),所以本 workflow 自成一体:
+# 产物 win-unpacked 目录会
+#   1. 作为 workflow artifact 上传(下载时 GitHub 自动打包成 zip);
+#   2. tag 触发时,自己创建/更新对应的 GitHub Release 并把 zip 附上去。
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: feat/electron-desktop
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      # tag 触发时,用 tag(去掉前缀 v)作为应用版本写入 package.json,让构建出的
+      # win-unpacked 内嵌版本与 Release 一致。手动构建无 tag,跳过,沿用分支当前版本。
+      - name: Sync version from tag
+        if: github.event_name == 'push'
+        shell: bash
+        run: npm pkg set version="${GITHUB_REF_NAME#v}"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run electron unit tests
+        run: yarn test:electron
+
+      - name: Build unpacked app
+        run: yarn electron:build
+
+      - name: Upload unpacked artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: TextJoiner-unpacked
+          path: dist-electron/win-unpacked
+          if-no-files-found: error
+
+      # 仅在 tag 触发时打包并发布到 Release。手动触发只留 artifact,跳过。
+      - name: Zip unpacked app
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          7z a "TextJoiner_${VERSION}_win-unpacked.zip" "./dist-electron/win-unpacked"
+          echo "APP_VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      # 自成一体:若该 tag 的 Release 不存在则创建,否则把 zip 附加上去。
+      - name: Publish to the release
+        if: github.event_name == 'push'
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.ref_name }}"
+          ZIP="TextJoiner_${APP_VERSION}_win-unpacked.zip"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+          else
+            gh release create "$TAG" "$ZIP" --title "$TAG" \
+              --notes "TextJoiner ${APP_VERSION} — Windows unpacked (Electron)."
+          fi

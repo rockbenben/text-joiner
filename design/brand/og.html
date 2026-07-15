@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #15171C; --panel: #1A1D23; --ink: #ECEAE3; --muted: #868D97;
+    --line: #2A2F38; --gutter: #565D67;
+    --a: #6366F1; --a-t: #A5B0F8; --a-bg: rgba(99,102,241,.16);
+    --b: #22D3EE; --b-t: #7FE6F5; --b-bg: rgba(34,211,238,.14);
+    --gold: #F4B740; --gold-t: #FFD173; --gold-bg: rgba(244,183,64,.13);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: var(--bg);
+    font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+    color: var(--ink);
+    display: flex; align-items: stretch;
+    overflow: hidden; position: relative;
+  }
+  /* faint structural grid — rows, like the tool */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: linear-gradient(var(--line) 1px, transparent 1px);
+    background-size: 100% 78.75px; opacity: .32; pointer-events: none;
+  }
+
+  .left {
+    flex: 1; padding: 60px 44px 60px 80px;
+    display: flex; flex-direction: column; justify-content: center; gap: 22px;
+    position: relative; z-index: 1;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500;
+    letter-spacing: .3em; text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .eyebrow .marks { display: inline-flex; gap: 6px; }
+  .eyebrow .marks i { width: 11px; height: 11px; display: block; border-radius: 3px; }
+  .eyebrow .marks .a { background: var(--a); }
+  .eyebrow .marks .b { background: var(--b); }
+  .eyebrow .marks .g { background: var(--gold); }
+
+  .title {
+    font-weight: 800; font-size: 118px; line-height: .9; letter-spacing: -.04em;
+  }
+  .title .g { color: var(--gold); }
+  .lede {
+    font-size: 40px; font-weight: 500; line-height: 1.14; color: var(--ink); max-width: 15ch;
+  }
+  .lede b { font-weight: 700; color: var(--gold); }
+  .desc {
+    font-family: 'JetBrains Mono', monospace; font-size: 17px; line-height: 1.55;
+    color: var(--muted); max-width: 44ch;
+  }
+  .url {
+    font-family: 'JetBrains Mono', monospace; font-size: 19px; font-weight: 500;
+    color: var(--ink); display: flex; align-items: center; gap: 12px; margin-top: 4px;
+  }
+  .url::before { content: ""; width: 26px; height: 2px; background: var(--gold); }
+
+  /* right: the join in action — columns, one template, generated rows */
+  .panel {
+    width: 464px; flex: none; align-self: center; margin-right: 70px;
+    background: var(--panel); border: 1px solid var(--line);
+    position: relative; z-index: 1;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,.7);
+  }
+  .panel .bar {
+    display: flex; align-items: center; gap: 11px;
+    padding: 15px 20px; border-bottom: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--muted);
+  }
+  .panel .bar .dot { width: 9px; height: 9px; background: var(--gutter); border-radius: 2px; }
+  .panel .bar .ca { color: var(--a-t); font-weight: 500; }
+  .panel .bar .cb { color: var(--b-t); font-weight: 500; }
+  .panel .bar .jn { color: var(--gold); font-weight: 700; }
+  .panel .bar b { color: var(--ink); font-weight: 500; }
+
+  /* two source columns */
+  .cols { display: flex; font-family: 'JetBrains Mono', monospace; font-size: 17px; }
+  .cols .col { flex: 1; }
+  .cols .col.a { border-right: 1px solid var(--line); }
+  .cols .hd {
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 11px 22px 7px;
+  }
+  .cols .col.a .hd { color: var(--a-t); }
+  .cols .col.b .hd { color: var(--b-t); }
+  .cell { padding: 6px 22px; line-height: 1; }
+  .col.a .cell { color: var(--a-t); background: var(--a-bg); border-top: 1px solid var(--bg); }
+  .col.b .cell { color: var(--b-t); background: var(--b-bg); border-top: 1px solid var(--bg); }
+
+  /* the template — the hero of the panel; placeholders colored to their column */
+  .panel .trow {
+    padding: 15px 22px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    background: var(--gold-bg);
+    font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700;
+    color: var(--gutter); display: flex; align-items: center; gap: 10px;
+  }
+  .panel .trow .lbl {
+    font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); align-self: center;
+  }
+  .panel .trow .syn { color: var(--gold); }
+  .panel .trow .p1 { color: var(--a-t); }
+  .panel .trow .p2 { color: var(--b-t); }
+
+  /* generated output rows */
+  .out { font-family: 'JetBrains Mono', monospace; font-size: 18px; }
+  .out .row { display: flex; align-items: center; height: 42px; background: var(--gold-bg); border-top: 1px solid var(--bg); }
+  .out .row .mk { width: 30px; text-align: center; color: var(--gold); font-weight: 700; }
+  .out .row .tx { flex: 1; color: var(--gold-t); padding-right: 20px; letter-spacing: -.01em; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="eyebrow">
+      <span class="marks"><i class="a"></i><i class="b"></i><i class="g"></i></span>
+      Tools&nbsp;By&nbsp;AI · Column&nbsp;Join
+    </div>
+    <div class="title">Text<br><span class="g">Joiner</span></div>
+    <div class="lede">Join columns with <b>your template</b>.</div>
+    <div class="desc">
+      Line-by-line join, driven by your template.<br>
+      CSV · SQL · JSON presets · prefix / suffix · 1–8 columns.<br>
+      Free &amp; fully in-browser.
+    </div>
+    <div class="url">tools.newzone.top</div>
+  </div>
+
+  <div class="panel">
+    <div class="bar"><span class="dot"></span><span class="ca">id</span><span class="cb">name</span><span class="jn">⋈</span><b>insert.sql</b></div>
+    <div class="cols">
+      <div class="col a">
+        <div class="hd">id · {1}</div>
+        <div class="cell">1</div>
+        <div class="cell">2</div>
+        <div class="cell">3</div>
+      </div>
+      <div class="col b">
+        <div class="hd">name · {2}</div>
+        <div class="cell">Ann</div>
+        <div class="cell">Bo</div>
+        <div class="cell">Cy</div>
+      </div>
+    </div>
+    <div class="trow"><span class="lbl">tpl</span><span class="syn">(</span><span class="p1">{1}</span><span class="syn">,&nbsp;'</span><span class="p2">{2}</span><span class="syn">')</span></div>
+    <div class="out">
+      <div class="row"><span class="mk">→</span><span class="tx">(1, 'Ann'),</span></div>
+      <div class="row"><span class="mk">→</span><span class="tx">(2, 'Bo'),</span></div>
+      <div class="row"><span class="mk">→</span><span class="tx">(3, 'Cy');</span></div>
+    </div>
+  </div>
+</body>
+</html>

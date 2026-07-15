@@ -1,0 +1,15 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon: one joined output ROW (gold template) holding two filled placeholder
+       cells — column A (indigo) + column B (cyan). The product's mechanic in one glyph:
+       columns become a templated row. Reads at 16-64px as a gold pill split into two
+       colored values. -->
+  <rect width="512" height="512" fill="#15171C"/>
+
+  <!-- output row = the gold template container -->
+  <rect x="52" y="180" width="408" height="152" rx="36" fill="#F4B740"/>
+
+  <!-- {1} filled by column A -->
+  <rect x="88" y="214" width="156" height="84" rx="18" fill="#6366F1"/>
+  <!-- {2} filled by column B -->
+  <rect x="268" y="214" width="156" height="84" rx="18" fill="#22D3EE"/>
+</svg>
