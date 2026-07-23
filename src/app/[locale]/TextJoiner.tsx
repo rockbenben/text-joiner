@@ -388,18 +388,20 @@ const TextJoiner = () => {
                 </Text>
               </div>
 
-              <Form.Item label={t("lineSeparator")} help={tCommon("supportEscapeChars")}>
+              {/* 转义清单挂 label tooltip：常显时是两行说明压着一行控件，而且
+                  prefix/suffix 同样走 parseEscapeChars，此前只有连接符写了说明。 */}
+              <Form.Item label={t("lineSeparator")} tooltip={tCommon("supportEscapeChars")}>
                 <Input value={lineSeparator} onChange={(e) => { setLineSeparator(e.target.value); setActiveBuiltinKey(""); }} aria-label={t("lineSeparator")} />
               </Form.Item>
 
               <Row gutter={8}>
                 <Col span={12}>
-                  <Form.Item label={t("prefix")}>
+                  <Form.Item label={t("prefix")} tooltip={tCommon("supportEscapeChars")}>
                     <Input value={prefix} onChange={(e) => { setPrefix(e.target.value); setActiveBuiltinKey(""); }} aria-label={t("prefix")} allowClear />
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label={t("suffix")}>
+                  <Form.Item label={t("suffix")} tooltip={tCommon("supportEscapeChars")}>
                     <Input value={suffix} onChange={(e) => { setSuffix(e.target.value); setActiveBuiltinKey(""); }} aria-label={t("suffix")} allowClear />
                   </Form.Item>
                 </Col>
