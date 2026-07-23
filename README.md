@@ -2,10 +2,11 @@
 🔗 Text Joiner
 </h1>
 <p align="center">
-    English | <a href="./README-zh.md">中文</a>
-</p>
-<p align="center">
     <em>Merge multiple text columns line by line with a template — batch-generate CSV, SQL, and JSON in your browser</em>
+</p>
+
+<p align="center">
+    <b>English</b> · <a href="./README.zh.md">简体中文</a>
 </p>
 
 <p align="center">
@@ -13,11 +14,11 @@
   <a href="https://tools.newzone.top/en/text-joiner"><img src="https://img.shields.io/badge/Live%20Demo-text--joiner-blue" alt="Live Demo"></a>
 </p>
 
-> Merge multi-column text line by line into CSV rows, SQL statements, or JSON arrays — driven entirely by a template you control.
-
 **Text Joiner** aligns several columns of text by line number and stitches each row together with a template you define. Paste columns **A** and **B**, write an output line like `INSERT INTO t VALUES ({1}, '{2}')`, add an optional line separator plus a global prefix/suffix, and generate a whole block of CSV, SQL, JSON, or Markdown at once. It handles uneven columns (pad or truncate), skips empty rows on demand, and works with 1–8 columns. Everything runs entirely in your browser — no servers, no uploads.
 
 👉 **Try it online**: <https://tools.newzone.top/en/text-joiner>
+
+![Text Joiner interface](./public/img/text-joiner-en.webp "Text Joiner interface")
 
 ## Key Features
 
@@ -64,16 +65,10 @@
 
 For detailed usage instructions and deployment guides, see the **[Official Documentation](https://docs.newzone.top/en/guide/text/text-joiner.html)**.
 
-## About the 365 Open Source Plan
-
-This project is part of the [365 Open Source Plan](https://github.com/rockbenben/365opensource).
-
-One person + AI, 300+ open source projects in a year. [Submit your idea →](https://my.feishu.cn/share/base/form/shrcnI6y7rrmlSjbzkYXh6sjmzb)
-
 ## Contributing
 
 Contributions are welcome! Feel free to open issues and pull requests.
 
-## License
+## About the 365 Open Source Plan
 
-MIT © 2025 [rockbenben](https://github.com/rockbenben). See [LICENSE](./LICENSE).
+Project **#026** of the [365 Open Source Plan](https://github.com/rockbenben/365opensource) — one person + AI, 300+ open-source projects in a year. [Submit your idea →](https://365.aishort.top/) · [Discord](https://discord.gg/PZTQfJ4GjX) · [Telegram](https://t.me/aishort_top)

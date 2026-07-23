@@ -2,10 +2,11 @@
 🔗 文本拼接
 </h1>
 <p align="center">
-    <a href="./README.md">English</a> | 中文
-</p>
-<p align="center">
     <em>按模板将多列文本逐行拼接——在浏览器本地批量生成 CSV、SQL、JSON</em>
+</p>
+
+<p align="center">
+    <a href="./README.md">English</a> · <b>简体中文</b>
 </p>
 
 <p align="center">
@@ -13,11 +14,11 @@
   <a href="https://tools.newzone.top/zh/text-joiner"><img src="https://img.shields.io/badge/%E5%9C%A8%E7%BA%BF%E4%BD%93%E9%AA%8C-text--joiner-blue" alt="在线体验"></a>
 </p>
 
-> 把多列文本逐行拼成 CSV 行、SQL 语句或 JSON 数组——完全由你定义的模板驱动。
-
 **文本拼接** 按行号对齐多列文本，用你定义的模板把每一行拼接起来。粘贴 **A**、**B** 等列，写一条输出行如 `INSERT INTO t VALUES ({1}, '{2}')`，再配上可选的行间分隔符与整体前/后缀，即可一次性生成整块 CSV、SQL、JSON 或 Markdown。它能处理列长不齐（补齐或截断）、按需跳过空行，支持 1~8 列。全程在浏览器本地运行，无服务器、无上传。
 
 👉 **在线体验**：<https://tools.newzone.top/zh/text-joiner>
+
+![文本拼接界面](./public/img/text-joiner-zh.webp "文本拼接使用界面")
 
 ## 核心特性
 
@@ -62,18 +63,12 @@
 
 ## 文档与部署
 
-详细使用说明与部署指南见 **[官方文档](https://docs.newzone.top/zh/guide/text/text-joiner.html)**。
-
-## 关于 365 开源计划
-
-本项目是 [365 开源计划](https://github.com/rockbenben/365opensource) 的一部分。
-
-一个人 + AI，一年 300+ 个开源项目。[提交你的需求 →](https://my.feishu.cn/share/base/form/shrcnI6y7rrmlSjbzkYXh6sjmzb)
+详细使用说明与部署指南见 **[官方文档](https://docs.newzone.top/guide/text/text-joiner.html)**。
 
 ## 贡献
 
 欢迎贡献！随时提交 issue 与 pull request。
 
-## 许可证
+## 关于 365 开源计划
 
-MIT © 2025 [rockbenben](https://github.com/rockbenben)。详见 [LICENSE](./LICENSE)。
+[365 开源计划](https://github.com/rockbenben/365opensource) 的第 **#026** 个项目——一个人 + AI，一年 300+ 个开源项目。[提交你的需求 →](https://365.aishort.top/) · [Discord](https://discord.gg/PZTQfJ4GjX) · [Telegram](https://t.me/aishort_top)
