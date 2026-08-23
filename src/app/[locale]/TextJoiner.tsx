@@ -244,7 +244,7 @@ const TextJoiner = () => {
               </Space>
             }>
             {/* 开关兼发现性：一行说明整表粘贴入口，Switch 让不想拆列的人关掉（逃生舱） */}
-            <Flex align="center" gap={8} className="!mb-3">
+            <Flex component="label" className="cursor-pointer" align="center" gap={8} style={{ marginBottom: 12 }}>
               <Switch size="small" checked={autoSplitPaste} onChange={setAutoSplitPaste} aria-label={t("autoSplitPaste")} />
               <Text type="secondary" className="!text-xs">
                 {t("pasteHint")}
@@ -428,7 +428,7 @@ const TextJoiner = () => {
               </Form.Item>
 
               <Form.Item className="!mb-0">
-                <Flex justify="space-between" align="center">
+                <Flex component="label" className="cursor-pointer" justify="space-between" align="center">
                   <Tooltip title={t("skipEmptyRowsTooltip")}>
                     <span>{t("skipEmptyRows")}</span>
                   </Tooltip>
