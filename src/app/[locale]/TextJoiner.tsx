@@ -279,7 +279,7 @@ const TextJoiner = () => {
                       {t("lineCount", { count: toLines(val).length })}
                     </Text>
                   </Flex>
-                  <TextArea rows={8} value={val} onChange={(e) => setColumnValue(i, e.target.value)} onPaste={handleColumnPaste} placeholder={t("columnPlaceholder", { num: i + 1 })} aria-label={`{${i + 1}}`} />
+                  <TextArea rows={8} value={val} onChange={(e) => setColumnValue(i, e.target.value)} onPaste={handleColumnPaste} dir="auto" placeholder={t("columnPlaceholder", { num: i + 1 })} aria-label={`{${i + 1}}`} />
                 </Col>
               ))}
             </Row>
