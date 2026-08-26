@@ -213,7 +213,12 @@ const TextJoiner = () => {
       <Row gutter={[16, 16]}>
         {/* 左：列输入 */}
         <Col xs={24} lg={16}>
+          {/* 撑满行高：右侧配置列固定 ~758px，而列输入原本只有 353px —— 左半屏
+              下方空着 400px，正好是这个工具最需要的东西（粘贴区）。lg 以下两列
+              堆叠，Col 高度按内容走，h-full 自动失效。 */}
           <PageCard
+            className="h-full flex flex-col"
+            styles={{ body: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0 } }}
             title={
               <Space>
                 <InboxOutlined /> {t("columnsTitle")}
@@ -250,9 +255,9 @@ const TextJoiner = () => {
                 {t("pasteHint")}
               </Text>
             </Flex>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} style={{ flex: 1, minHeight: 0 }}>
               {cols.map((val, i) => (
-                <Col xs={24} md={cols.length === 1 ? 24 : 12} key={i}>
+                <Col xs={24} md={cols.length === 1 ? 24 : 12} key={i} style={{ display: "flex", flexDirection: "column" }}>
                   <Flex justify="space-between" align="center" className="!mb-1">
                     {/* {N} 用强调色对应右侧模板占位符；点击即把该占位符插到模板光标处，
                         把这个招牌 motif 变成真控件（onMouseDown 阻断默认，保住模板焦点与光标） */}
@@ -263,7 +268,12 @@ const TextJoiner = () => {
                         tabIndex={0}
                         aria-label={t("insertPlaceholder", { num: i + 1 })}
                         className="!text-sm !cursor-pointer transition-opacity hover:!opacity-70"
-                        style={{ color: token.colorPrimary }}
+                        // inline-flex + minHeight 24: 芯片本来 38×20,作为 role="button"
+                        // 差 4px 够不到 WCAG 2.2 SC 2.5.8 的 24×24。撑高不改字号也不改行位。
+                        // ⚠ 强调色走 var(--accent) 而不是 token.colorPrimary —— 实测这两个芯片
+                        // 在【亮色主题下拿到的是暗色那套】(#6b7adc,亮纸上 3.73:1)。同 ToolPage
+                        // 里那条注释说的失配,只是这里是逐元素发生的。
+                        style={{ color: "var(--accent)", display: "inline-flex", alignItems: "center", minHeight: 24 }}
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => insertPlaceholder(i + 1)}
                         onKeyDown={(e) => {
@@ -279,7 +289,17 @@ const TextJoiner = () => {
                       {t("lineCount", { count: toLines(val).length })}
                     </Text>
                   </Flex>
-                  <TextArea rows={8} value={val} onChange={(e) => setColumnValue(i, e.target.value)} onPaste={handleColumnPaste} dir="auto" placeholder={t("columnPlaceholder", { num: i + 1 })} aria-label={`{${i + 1}}`} />
+                  {/* rows 只做 lg 以下堆叠时的高度基线；lg 并排时 flex:1 接管 */}
+                  <TextArea
+                    rows={8}
+                    style={{ flex: 1, minHeight: 176 }}
+                    value={val}
+                    onChange={(e) => setColumnValue(i, e.target.value)}
+                    onPaste={handleColumnPaste}
+                    dir="auto"
+                    placeholder={t("columnPlaceholder", { num: i + 1 })}
+                    aria-label={`{${i + 1}}`}
+                  />
                 </Col>
               ))}
             </Row>
@@ -447,7 +467,8 @@ const TextJoiner = () => {
             <ResultCard content={result} stats={resultStats} onCopy={() => copyToClipboard(result)} onExport={() => downloadFile(result, "joined_text.txt")} />
           </div>
         ) : (
-          <PageCard title={tCommon("result")} style={{ borderTop: `2px solid ${token.colorPrimary}` }}>
+          // 强调条走 --accent：同上,token.colorPrimary 在亮色下会拿到暗色值
+          <PageCard title={tCommon("result")} style={{ borderTop: "2px solid var(--accent)" }}>
             <Flex vertical align="center" justify="center" gap={12} className="!py-10 !text-center">
               <MergeCellsOutlined style={{ fontSize: 32, color: token.colorTextQuaternary }} />
               {!hasContent ? (
