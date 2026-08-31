@@ -15,6 +15,7 @@ import { serializeJoinerConfig, parseJoinerConfig, MAX_COLUMNS, type JoinerSetti
 import { buildPresets, type BuiltinPreset } from "./joinerPresetsDefs";
 import { extendTemplate } from "./extendTemplate";
 import { parseTable } from "./parseTable";
+import { useFileExport } from "@/app/hooks/useFileExport";
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -31,6 +32,7 @@ const TextJoiner = () => {
   const { token } = theme.useToken();
   const { copyToClipboard } = useCopyToClipboard();
   const { message } = App.useApp();
+  const exportFile = useFileExport();
   const [presetModalOpen, setPresetModalOpen] = useState(false);
   const [presetName, setPresetName] = useState("");
 
@@ -72,7 +74,7 @@ const TextJoiner = () => {
 
   const handleExport = () => {
     const settings: JoinerSettings = { template, alignMode, skipEmptyRows, lineSeparator, prefix, suffix, columnCount: cols.length };
-    downloadFile(serializeJoinerConfig(joinerPresets.presets, settings), "text-joiner-config.json", "application/json");
+    void exportFile(serializeJoinerConfig(joinerPresets.presets, settings), "text-joiner-config.json", "application/json");
   };
 
   const handleImport = () => {
