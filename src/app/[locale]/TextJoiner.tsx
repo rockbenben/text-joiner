@@ -1,16 +1,17 @@
 "use client";
 import React, { useMemo, useState, useRef, useEffect } from "react";
-import { Button, Input, InputNumber, Typography, Form, Space, Segmented, Switch, Flex, Row, Col, Tooltip, Divider, Select, Modal, Popconfirm, theme, App, type GetRef } from "antd";
+import { Button, Input, InputNumber, Typography, Form, Space, Segmented, Switch, Flex, Row, Col, Tooltip, Divider, Select, Modal, Popconfirm, theme, App, type GetRef, Card } from "antd";
 import { SettingOutlined, InboxOutlined, ClearOutlined, MergeCellsOutlined, ExperimentOutlined, PlusOutlined, SaveOutlined, DeleteOutlined, ImportOutlined, ExportOutlined } from "@ant-design/icons";
 import { useTranslations } from "next-intl";
-import PageCard from "@/app/components/styled/PageCard";
 import ResultCard from "@/app/components/ResultCard";
+import ToggleRow from "@/app/components/styled/ToggleRow";
 import { useLocalStorage } from "@/app/hooks/useLocalStorage";
 import { useCopyToClipboard } from "@/app/hooks/useCopyToClipboard";
 import { useTextStats } from "@/app/hooks/useTextStats";
 import { downloadFile, parseEscapeChars } from "@/app/utils";
 import { joinColumns, toLines, type JoinOptions } from "./joinColumns";
-import { useJoinerPresets } from "./useJoinerPresets";
+import { usePresetCollection } from "@/app/hooks/usePresetCollection";
+import type { JoinerPreset } from "./joinerConfig";
 import { serializeJoinerConfig, parseJoinerConfig, MAX_COLUMNS, type JoinerSettings } from "./joinerConfig";
 import { buildPresets, type BuiltinPreset } from "./joinerPresetsDefs";
 import { extendTemplate } from "./extendTemplate";
@@ -70,11 +71,27 @@ const TextJoiner = () => {
   const result = useMemo(() => (hasContent && template ? joinColumns(cols, options) : ""), [hasContent, template, cols, options]);
   const resultStats = useTextStats(result);
 
-  const joinerPresets = useJoinerPresets({ template, lineSeparator, prefix, suffix, setTemplate, setLineSeparator, setPrefix, setSuffix });
+  // 命名自定义模板(模板 + 连接符 + 前缀 + 后缀四件套)的增删改查。编辑字段后不自动清
+  // active(同 PromptPresetPicker),由「更新」按钮显式回存。
+  const joinerStore = usePresetCollection<JoinerPreset>("text-joiner-presets", "text-joiner-activePresetId");
+  const saveJoinerPreset = (name: string) => joinerStore.add({ id: String(Date.now()), name, template, lineSeparator, prefix, suffix });
+  const loadJoinerPreset = (id: string) => {
+    if (!id) return joinerStore.setActiveId("");
+    const p = joinerStore.items.find((x) => x.id === id);
+    if (!p) return;
+    setTemplate(p.template);
+    setLineSeparator(p.lineSeparator);
+    setPrefix(p.prefix);
+    setSuffix(p.suffix);
+    joinerStore.setActiveId(id);
+  };
+  const updateJoinerPreset = () => {
+    if (joinerStore.activeId) joinerStore.update(joinerStore.activeId, { template, lineSeparator, prefix, suffix });
+  };
 
   const handleExport = () => {
     const settings: JoinerSettings = { template, alignMode, skipEmptyRows, lineSeparator, prefix, suffix, columnCount: cols.length };
-    void exportFile(serializeJoinerConfig(joinerPresets.presets, settings), "text-joiner-config.json", "application/json");
+    void exportFile(serializeJoinerConfig(joinerStore.items, settings), "text-joiner-config.json", "application/json");
   };
 
   const handleImport = () => {
@@ -86,8 +103,8 @@ const TextJoiner = () => {
       if (!file) return;
       try {
         const cfg = parseJoinerConfig(await file.text());
-        joinerPresets.setPresets(cfg.presets);
-        joinerPresets.setActivePresetId(""); // 旧 active 可能指向已不存在的模板
+        joinerStore.setItems(cfg.presets);
+        joinerStore.setActiveId(""); // 旧 active 可能指向已不存在的模板
         setActiveBuiltinKey(""); // 导入应用自己的模板，脱离活内置预设
         const s = cfg.settings;
         setTemplate(s.template);
@@ -110,7 +127,7 @@ const TextJoiner = () => {
       message.error(t("presetNameRequired"));
       return;
     }
-    joinerPresets.saveAs(presetName.trim());
+    saveJoinerPreset(presetName.trim());
     setPresetModalOpen(false);
     message.success(t("presetSaved"));
   };
@@ -171,7 +188,7 @@ const TextJoiner = () => {
     setPrefix(p.prefix);
     setSuffix(p.suffix);
     setActiveBuiltinKey(p.key); // 该内置预设变"活"（高亮 + 后续随列数联动）
-    joinerPresets.setActivePresetId(""); // 内置与自定义互斥，避免「更新」误覆盖自定义
+    joinerStore.setActiveId(""); // 内置与自定义互斥，避免「更新」误覆盖自定义
   };
 
   // 改列数：设新值后，若有活内置预设，按新列数重生其四字段（模板联动）。
@@ -218,7 +235,7 @@ const TextJoiner = () => {
           {/* 撑满行高：右侧配置列固定 ~758px，而列输入原本只有 353px —— 左半屏
               下方空着 400px，正好是这个工具最需要的东西（粘贴区）。lg 以下两列
               堆叠，Col 高度按内容走，h-full 自动失效。 */}
-          <PageCard
+          <Card
             className="h-full flex flex-col"
             styles={{ body: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0 } }}
             title={
@@ -305,12 +322,12 @@ const TextJoiner = () => {
                 </Col>
               ))}
             </Row>
-          </PageCard>
+          </Card>
         </Col>
 
         {/* 右：配置（输出格式 / 处理方式两组） */}
         <Col xs={24} lg={8}>
-          <PageCard
+          <Card
             title={
               <Space>
                 <SettingOutlined /> {tCommon("configuration")}
@@ -356,11 +373,11 @@ const TextJoiner = () => {
                     style={{ flex: 1 }}
                     placeholder={t("presetSelectPlaceholder")}
                     aria-label={t("myTemplates")}
-                    value={joinerPresets.activePresetId || undefined}
-                    onChange={(v) => { joinerPresets.load(v); setActiveBuiltinKey(""); }}
+                    value={joinerStore.activeId || undefined}
+                    onChange={(v) => { loadJoinerPreset(v); setActiveBuiltinKey(""); }}
                     allowClear
-                    onClear={() => { joinerPresets.load(""); setActiveBuiltinKey(""); }}
-                    options={joinerPresets.presets.map((p) => ({ label: p.name, value: p.id }))}
+                    onClear={() => { loadJoinerPreset(""); setActiveBuiltinKey(""); }}
+                    options={joinerStore.items.map((p) => ({ label: p.name, value: p.id }))}
                   />
                   <Tooltip title={t("presetSaveAs")}>
                     <Button
@@ -375,23 +392,23 @@ const TextJoiner = () => {
                   <Tooltip title={t("presetUpdate")}>
                     <Button
                       icon={<SaveOutlined />}
-                      disabled={!joinerPresets.activePresetId}
+                      disabled={!joinerStore.activeId}
                       aria-label={t("presetUpdate")}
                       onClick={() => {
-                        joinerPresets.updateActive();
+                        updateJoinerPreset();
                         message.success(t("presetUpdated"));
                       }}
                     />
                   </Tooltip>
                   <Popconfirm
                     title={t("presetDeleteConfirm")}
-                    disabled={!joinerPresets.activePresetId}
+                    disabled={!joinerStore.activeId}
                     onConfirm={() => {
-                      joinerPresets.remove(joinerPresets.activePresetId);
+                      joinerStore.remove(joinerStore.activeId);
                       message.success(t("presetDeleted"));
                     }}>
                     <Tooltip title={t("presetDelete")}>
-                      <Button danger icon={<DeleteOutlined />} disabled={!joinerPresets.activePresetId} aria-label={t("presetDelete")} />
+                      <Button danger icon={<DeleteOutlined />} disabled={!joinerStore.activeId} aria-label={t("presetDelete")} />
                     </Tooltip>
                   </Popconfirm>
                 </Space.Compact>
@@ -450,15 +467,12 @@ const TextJoiner = () => {
               </Form.Item>
 
               <Form.Item className="!mb-0">
-                <Flex component="label" className="cursor-pointer" justify="space-between" align="center">
-                  <Tooltip title={t("skipEmptyRowsTooltip")}>
-                    <span>{t("skipEmptyRows")}</span>
-                  </Tooltip>
+                <ToggleRow label={t("skipEmptyRows")} tooltip={t("skipEmptyRowsTooltip")}>
                   <Switch size="small" checked={skipEmptyRows} onChange={setSkipEmptyRows} aria-label={t("skipEmptyRows")} />
-                </Flex>
+                </ToggleRow>
               </Form.Item>
             </Form>
-          </PageCard>
+          </Card>
         </Col>
       </Row>
 
@@ -470,7 +484,7 @@ const TextJoiner = () => {
           </div>
         ) : (
           // 强调条走 --accent：同上,token.colorPrimary 在亮色下会拿到暗色值
-          <PageCard title={tCommon("result")} style={{ borderTop: "2px solid var(--accent)" }}>
+          <Card title={tCommon("result")} style={{ borderTop: "2px solid var(--accent)" }}>
             <Flex vertical align="center" justify="center" gap={12} className="!py-10 !text-center">
               <MergeCellsOutlined style={{ fontSize: 32, color: token.colorTextQuaternary }} />
               {!hasContent ? (
@@ -491,7 +505,7 @@ const TextJoiner = () => {
                 </Text>
               )}
             </Flex>
-          </PageCard>
+          </Card>
         )}
       </div>
 
