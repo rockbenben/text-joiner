@@ -289,10 +289,10 @@ const TextJoiner = () => {
                         className="!text-sm !cursor-pointer transition-opacity hover:!opacity-70"
                         // inline-flex + minHeight 24: 芯片本来 38×20,作为 role="button"
                         // 差 4px 够不到 WCAG 2.2 SC 2.5.8 的 24×24。撑高不改字号也不改行位。
-                        // ⚠ 强调色走 var(--accent) 而不是 token.colorPrimary —— 实测这两个芯片
-                        // 在【亮色主题下拿到的是暗色那套】(#6b7adc,亮纸上 3.73:1)。同 ToolPage
-                        // 里那条注释说的失配,只是这里是逐元素发生的。
-                        style={{ color: "var(--accent)", display: "inline-flex", alignItems: "center", minHeight: 24 }}
+                        // ⚠ 强调色走 var(--accent-text)（种子蓝）而不是 --accent ——
+                        // 后者被 AccentSync 同步成 antd 暗色派生值，压在卡片底上
+                        // 够不到 WCAG AA 的 4.5:1；种子蓝两个主题都够。
+                        style={{ color: "var(--accent-text)", display: "inline-flex", alignItems: "center", minHeight: 24 }}
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => insertPlaceholder(i + 1)}
                         onKeyDown={(e) => {
@@ -422,7 +422,7 @@ const TextJoiner = () => {
                 <Text type="secondary" className="!block !text-xs !font-medium !tracking-wide">
                   {t("sectionAssembly")}
                 </Text>
-                <Text type="secondary" className="!block !font-mono" style={{ fontSize: 11, opacity: 0.55 }}>
+                <Text type="secondary" className="!block !font-mono" style={{ fontSize: 11 }}>
                   {t("assemblyHint")}
                 </Text>
               </div>
@@ -495,7 +495,7 @@ const TextJoiner = () => {
                       {t("emptyHint")}
                     </Text>
                   </div>
-                  <Button icon={<ExperimentOutlined />} onClick={loadExample}>
+                  <Button icon={<ExperimentOutlined aria-hidden />} onClick={loadExample}>
                     {t("loadExample")}
                   </Button>
                 </>
