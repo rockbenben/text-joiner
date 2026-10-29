@@ -26,7 +26,7 @@
 - **Placeholder Templates**: `{1}`, `{2}`, … reference each column freely; undefined column numbers are left as literal text
 - **Uneven Columns Handled**: pad missing cells with empty strings (follow the longest column) or truncate to the shortest — with an option to skip fully-empty rows
 - **Whole-Block Wrapping**: a line separator plus a global prefix/suffix build complete constructs like `IN ('a', 'b')` or JSON arrays in one shot
-- **One-Click Presets**: ready-made templates for CSV, SQL `VALUES`, SQL `IN`, JSON, and Markdown
+- **One-Click Presets**: 8 ready-made templates — CSV, quoted CSV, TSV, SQL `VALUES`, SQL `IN`, JSON array, Markdown list, Markdown link
 - **1–8 Columns**: scale from a single-column line formatter up to eight-way joins
 - **Escape-Aware**: separators and affixes understand escape characters (e.g. `\n`, `\t`)
 - **Live Preview & Export**: see the merged output instantly, copy it, or download it as a file
@@ -46,7 +46,7 @@
 - **CSV rows** — template `{1},{2}`, newline separator.
 - **SQL `INSERT ... VALUES`** — line template `({1}, '{2}')`, separator `,\n`, global prefix `INSERT INTO t (a, b) VALUES\n` and suffix `;`.
 - **SQL `IN (...)`** — line template `'{1}'`, separator `, `, prefix `IN (` and suffix `)`.
-- **JSON array** — line template `"{1}"`, separator `,\n`, prefix `[\n` and suffix `\n]`.
+- **JSON array** — line template `"{1}"` for one column, `{"c1": "{1}", …}` for several; separator `,\n`, prefix `[\n` and suffix `\n]`.
 - **Single-column formatter** — set columns to 1 and use the template to quote or affix every line.
 
 ## FAQ
