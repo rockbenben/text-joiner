@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "字幕翻訳機",
-      "description": "SRT、ASS、VTT、SBV、LRC字幕を一括翻訳、120以上の言語に対応"
+      "description": "SRT、ASS、SSA、VTT、SBV、LRC字幕を一括翻訳、120以上の言語に対応"
     },
     "jsonTranslate": {
       "title": "i18n JSON翻訳",
@@ -307,6 +307,10 @@
         {
           "q": "単一の列のフォーマットにもこのツールを使えますか？",
           "a": "使えます。列数を1にして、テンプレートで各行に引用符やプレフィックス／サフィックスを付ければ、行ごとのフォーマッターになります。"
+        },
+        {
+          "q": "貼り付けた列データはサーバーに保存されますか？",
+          "a": "完全フロントエンド処理：複数列の行単位の結合はすべてブラウザ内で完結し、貼り付けた列も結合結果もいかなるサーバーにもアップロードされません。機密内容も安心してご利用いただけます。"
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Flareブックマーク変換",
-      "description": "ブラウザブックマークとFlare形式の相互変換"
+      "description": "ブックマーク HTML を Flare YAML に変換（フラット化）"
     },
     "dataParserImgPrompt": {
       "title": "IMGPromptデータ生成",

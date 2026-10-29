@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "字幕翻譯器",
-      "description": "批次翻譯 SRT、ASS、VTT、SBV、LRC 字幕，支援 120+ 語言"
+      "description": "批次翻譯 SRT、ASS、SSA、VTT、SBV、LRC 字幕，支援 120+ 語言"
     },
     "jsonTranslate": {
       "title": "JSON 多語言翻譯",
@@ -307,6 +307,10 @@
         {
           "q": "單欄文字可以用這個工具做格式化嗎？",
           "a": "可以。把欄數減到 1，用範本給每行加前後綴或引號，就是一個逐行格式化器。"
+        },
+        {
+          "q": "我貼上的欄位資料會上傳到伺服器嗎？",
+          "a": "完全前端處理：多欄文字的逐行合併全部在瀏覽器內完成，貼上的欄位內容與合併結果都不上傳任何伺服器，敏感內容也可放心使用。"
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Flare 書籤轉換",
-      "description": "瀏覽器書籤與 Flare 格式互轉"
+      "description": "瀏覽器書籤轉 Flare YAML（扁平化匯入）"
     },
     "dataParserImgPrompt": {
       "title": "IMGPrompt 資料產生",

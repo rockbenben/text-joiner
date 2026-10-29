@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Trình Dịch Phụ Đề",
-      "description": "Dịch hàng loạt SRT, ASS, VTT, SBV, LRC. 120+ ngôn ngữ."
+      "description": "Dịch hàng loạt SRT, ASS, SSA, VTT, SBV, LRC. 120+ ngôn ngữ."
     },
     "jsonTranslate": {
       "title": "Trình Dịch JSON i18n",
@@ -307,6 +307,10 @@
         {
           "q": "Có thể dùng công cụ này để định dạng một cột duy nhất không?",
           "a": "Có. Giảm số cột xuống còn 1 và dùng mẫu để thêm dấu ngoặc kép hoặc tiền tố/hậu tố cho mỗi dòng, công cụ sẽ trở thành trình định dạng theo từng dòng."
+        },
+        {
+          "q": "Các cột tôi dán vào có được tải lên máy chủ không?",
+          "a": "100% phía client: việc ghép các cột theo từng dòng diễn ra hoàn toàn trong trình duyệt — cả các cột dán vào lẫn kết quả đều không được tải lên máy chủ, nội dung nhạy cảm vẫn an toàn."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Trình chuyển đổi Flare",
-      "description": "Chuyển đổi bookmark trình duyệt và định dạng Flare"
+      "description": "Bookmark HTML sang Flare YAML (làm phẳng)"
     },
     "dataParserImgPrompt": {
       "title": "Trình tạo dữ liệu IMGPrompt",

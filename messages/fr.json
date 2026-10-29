@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Traducteur Sous-titres",
-      "description": "Traduction par lot SRT, ASS, VTT, SBV, LRC. 120+ langues."
+      "description": "Traduction par lot SRT, ASS, SSA, VTT, SBV, LRC. 120+ langues."
     },
     "jsonTranslate": {
       "title": "Traducteur JSON i18n",
@@ -307,6 +307,10 @@
         {
           "q": "Puis-je utiliser cet outil pour formater une seule colonne ?",
           "a": "Oui. Réduisez le nombre de colonnes à 1 et utilisez le modèle pour ajouter des guillemets ou un préfixe/suffixe à chaque ligne ; l'outil devient alors un formateur ligne par ligne."
+        },
+        {
+          "q": "Les colonnes que je colle sont-elles envoyées sur un serveur ?",
+          "a": "100% côté client : la fusion des colonnes ligne par ligne se passe entièrement dans votre navigateur — ni les colonnes collées ni le résultat ne sont envoyés, donc les contenus sensibles sont protégés."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Convertisseur Flare",
-      "description": "Conversion favoris navigateur et format Flare"
+      "description": "Favoris HTML vers Flare YAML (aplati)"
     },
     "dataParserImgPrompt": {
       "title": "Générateur Données IMGPrompt",

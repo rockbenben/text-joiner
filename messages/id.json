@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Penerjemah Subtitle",
-      "description": "Terjemahan batch SRT, ASS, VTT, SBV, LRC. 120+ bahasa."
+      "description": "Terjemahan batch SRT, ASS, SSA, VTT, SBV, LRC. 120+ bahasa."
     },
     "jsonTranslate": {
       "title": "Penerjemah JSON i18n",
@@ -303,6 +303,10 @@
         {
           "q": "Bisakah alat ini digunakan untuk memformat satu kolom saja?",
           "a": "Bisa. Kurangi jumlah kolom menjadi 1 dan gunakan template untuk menambahkan tanda kutip atau prefix/suffix di setiap baris — alat ini menjadi pemformat baris demi baris."
+        },
+        {
+          "q": "Apakah kolom yang saya tempel diunggah ke server?",
+          "a": "Pemrosesan frontend 100%: penggabungan kolom demi baris dilakukan sepenuhnya di browser, kolom yang ditempel maupun hasilnya tidak diunggah ke server mana pun, konten sensitif aman."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Konverter Flare",
-      "description": "Konversi bookmark browser dan format Flare"
+      "description": "Bookmark HTML ke Flare YAML (rata)"
     },
     "dataParserImgPrompt": {
       "title": "Generator Data IMGPrompt",

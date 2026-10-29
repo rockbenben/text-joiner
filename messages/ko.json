@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "자막 번역기",
-      "description": "SRT, ASS, VTT, SBV, LRC 자막 일괄 번역, 120개 이상 언어 지원"
+      "description": "SRT, ASS, SSA, VTT, SBV, LRC 자막 일괄 번역, 120개 이상 언어 지원"
     },
     "jsonTranslate": {
       "title": "i18n JSON 번역",
@@ -307,6 +307,10 @@
         {
           "q": "이 도구로 단일 열만 포맷할 수도 있나요?",
           "a": "가능합니다. 열 수를 1개로 줄이고 템플릿으로 각 줄에 따옴표나 접두사/접미사를 추가하면 줄 단위 포맷터가 됩니다."
+        },
+        {
+          "q": "붙여넣은 열 데이터가 서버에 저장되나요?",
+          "a": "완전 프런트엔드 처리: 여러 열의 행 단위 결합이 모두 브라우저 내에서 완료되며 붙여넣은 열과 결합 결과 모두 어떤 서버에도 업로드되지 않아 민감한 내용도 안심하고 사용 가능합니다."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Flare 북마크 변환",
-      "description": "브라우저 북마크와 Flare 형식 상호 변환"
+      "description": "북마크 HTML을 Flare YAML로 변환 (평면화)"
     },
     "dataParserImgPrompt": {
       "title": "IMGPrompt 생성기",

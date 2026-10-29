@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Traduttore Sottotitoli",
-      "description": "Traduzione in batch SRT, ASS, VTT, SBV, LRC. 120+ lingue."
+      "description": "Traduzione in batch SRT, ASS, SSA, VTT, SBV, LRC. 120+ lingue."
     },
     "jsonTranslate": {
       "title": "Traduttore JSON i18n",
@@ -307,6 +307,10 @@
         {
           "q": "Posso usare questo strumento per formattare una singola colonna?",
           "a": "Sì. Riduci il numero di colonne a 1 e usa il modello per aggiungere virgolette o prefisso/suffisso a ogni riga: diventa un formattatore riga per riga."
+        },
+        {
+          "q": "Le colonne che incollo vengono caricate su un server?",
+          "a": "100% lato client: l'unione delle colonne riga per riga avviene interamente nel tuo browser — né le colonne incollate né il risultato vengono caricati, quindi i contenuti sensibili sono al sicuro."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Convertitore Flare",
-      "description": "Conversione preferiti browser e formato Flare"
+      "description": "Segnalibri HTML in Flare YAML (appiattito)"
     },
     "dataParserImgPrompt": {
       "title": "Generatore Dati IMGPrompt",

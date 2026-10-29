@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Altyazı Çevirici",
-      "description": "Toplu SRT, ASS, VTT, SBV, LRC çevirisi. 120+ dil."
+      "description": "Toplu SRT, ASS, SSA, VTT, SBV, LRC çevirisi. 120+ dil."
     },
     "jsonTranslate": {
       "title": "i18n JSON Çevirici",
@@ -307,6 +307,10 @@
         {
           "q": "Bu aracı tek bir sütunu biçimlendirmek için kullanabilir miyim?",
           "a": "Evet. Sütun sayısını 1'e indirin ve şablonla her satıra tırnak işareti veya önek/sonek ekleyin; araç satır satır bir biçimlendiriciye dönüşür."
+        },
+        {
+          "q": "Yapıştırdığım sütunlar bir sunucuya yükleniyor mu?",
+          "a": "%100 istemci tarafında: sütunların satır satır birleştirilmesi tamamen tarayıcınızda olur — yapıştırdığınız sütunlar da sonuç da hiçbir sunucuya yüklenmez, hassas içerik güvende."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Flare Dönüştürücü",
-      "description": "Tarayıcı yer imleri ve Flare formatı dönüşümü"
+      "description": "Yer imi HTML'ini Flare YAML'ye dönüştür (düz)"
     },
     "dataParserImgPrompt": {
       "title": "IMGPrompt Veri Oluşturucu",

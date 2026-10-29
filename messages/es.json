@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Traductor Subtítulos",
-      "description": "Traducción por lote SRT, ASS, VTT, SBV, LRC. 120+ idiomas."
+      "description": "Traducción por lote SRT, ASS, SSA, VTT, SBV, LRC. 120+ idiomas."
     },
     "jsonTranslate": {
       "title": "Traductor JSON i18n",
@@ -307,6 +307,10 @@
         {
           "q": "¿Puedo usar esta herramienta para formatear una sola columna?",
           "a": "Sí. Reduce el número de columnas a 1 y usa la plantilla para añadir comillas o prefijo/sufijo a cada línea; se convierte en un formateador línea por línea."
+        },
+        {
+          "q": "¿Se suben las columnas que pego a un servidor?",
+          "a": "100% del lado del cliente: la combinación de columnas línea a línea ocurre totalmente en tu navegador — ni las columnas pegadas ni el resultado se suben, así que el contenido sensible está seguro."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Convertidor Flare",
-      "description": "Conversión marcadores navegador y formato Flare"
+      "description": "Marcadores HTML a Flare YAML (aplanado)"
     },
     "dataParserImgPrompt": {
       "title": "Generador Datos IMGPrompt",

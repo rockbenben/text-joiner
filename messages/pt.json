@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Tradutor Legendas",
-      "description": "Tradução em lote SRT, ASS, VTT, SBV, LRC. 120+ idiomas."
+      "description": "Tradução em lote SRT, ASS, SSA, VTT, SBV, LRC. 120+ idiomas."
     },
     "jsonTranslate": {
       "title": "Tradutor JSON i18n",
@@ -307,6 +307,10 @@
         {
           "q": "Posso usar esta ferramenta para formatar uma única coluna?",
           "a": "Sim. Reduza o número de colunas para 1 e use o modelo para adicionar aspas ou prefixo/sufixo a cada linha; a ferramenta se torna um formatador linha por linha."
+        },
+        {
+          "q": "As colunas que eu colo são enviadas para algum servidor?",
+          "a": "100% no navegador: a combinação das colunas linha a linha acontece inteiramente no seu navegador — nem as colunas coladas nem o resultado são enviados, então conteúdo sensível fica seguro."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Conversor Flare",
-      "description": "Conversão favoritos navegador e formato Flare"
+      "description": "Favoritos HTML para Flare YAML (achatado)"
     },
     "dataParserImgPrompt": {
       "title": "Gerador Dados IMGPrompt",

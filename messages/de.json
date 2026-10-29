@@ -256,7 +256,7 @@
   "tools": {
     "subtitleTranslator": {
       "title": "Untertitel-Übersetzer",
-      "description": "Batch-Übersetzung für SRT, ASS, VTT, SBV, LRC. 120+ Sprachen."
+      "description": "Batch-Übersetzung für SRT, ASS, SSA, VTT, SBV, LRC. 120+ Sprachen."
     },
     "jsonTranslate": {
       "title": "i18n JSON-Übersetzer",
@@ -307,6 +307,10 @@
         {
           "q": "Kann ich mit diesem Tool auch eine einzelne Spalte formatieren?",
           "a": "Ja. Reduzieren Sie die Spaltenzahl auf 1 und nutzen Sie die Vorlage, um jeder Zeile Anführungszeichen oder Präfix/Suffix hinzuzufügen – so wird das Tool zu einem zeilenweisen Formatierer."
+        },
+        {
+          "q": "Werden meine Spalten auf einen Server hochgeladen?",
+          "a": "100% clientseitig: das zeilenweise Zusammenführen der Spalten läuft vollständig in Ihrem Browser — weder die eingefügten Spalten noch das Ergebnis werden hochgeladen, sodass sensible Inhalte sicher sind."
         }
       ],
       "features": [
@@ -348,7 +352,7 @@
     },
     "dataParserFlare": {
       "title": "Flare Lesezeichen-Konverter",
-      "description": "Browser-Lesezeichen und Flare-Format konvertieren"
+      "description": "Lesezeichen-HTML zu Flare-YAML (flachgestellt)"
     },
     "dataParserImgPrompt": {
       "title": "IMGPrompt Datengenerator",
